@@ -1,4 +1,3 @@
-# univariate data preparation
 import numpy as np
 
 def splitTimeSequence(sequence, n_steps):
@@ -19,14 +18,24 @@ def splitTimeSequence(sequence, n_steps):
 
 def splitSeqGetX(sequence, n_steps):
 	'''Splits time series into X and y, with n_steps determining length. Returns only the X. '''
-	return split_sequence(sequence, n_steps)[0]
+	return splitTimeSequence(sequence, n_steps)[0]
 
 def splitSeqGety(sequence, n_steps):
 	'''Splits time series into X and y, with n_steps determining length. Returns only the y. '''
-	return split_sequence(sequence, n_steps)[1]
+	return splitTimeSequence(sequence, n_steps)[1]
 
-def timeseriesSplitTestTrain(nparray, proportion=0.8):
+def timeseriesSplitTestTrain(array, proportion=0.8):
+	'''Splits time-series numpy array in a training and test set, according to the proportion set (default = 0.8)
+	Returns train and test arrays'''
 	indexSplit = round(len(array) * 0.8)
 	train = array[:indexSplit]
 	test = array[indexSplit:]
 	return train, test
+
+def shapeXinputforColumns(array, n_steps, col_indexes):
+	X = []
+	#col_index = [1,2,3,4]
+	for i in col_index:
+		X.append(sq.splitSeqGetX(array[:,i], n_steps))
+	return np.dstack(X)
+
