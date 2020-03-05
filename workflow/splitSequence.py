@@ -1,8 +1,9 @@
 # univariate data preparation
-from numpy import array
+import numpy as np
 
-# split a univariate sequence into samples
-def split_sequence(sequence, n_steps):
+def splitTimeSequence(sequence, n_steps):
+	'''Splits time series into X and y, with n_steps determining the length of each X. 
+	Returns numpy arrays of X and y'''
 	X, y = list(), list()
 	for i in range(len(sequence)):
 		# find the end of this pattern
@@ -14,4 +15,18 @@ def split_sequence(sequence, n_steps):
 		seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
 		X.append(seq_x)
 		y.append(seq_y)
-	return array(X), array(y)
+	return np.array(X), np.array(y)
+
+def splitSeqGetX(sequence, n_steps):
+	'''Splits time series into X and y, with n_steps determining length. Returns only the X. '''
+	return split_sequence(sequence, n_steps)[0]
+
+def splitSeqGety(sequence, n_steps):
+	'''Splits time series into X and y, with n_steps determining length. Returns only the y. '''
+	return split_sequence(sequence, n_steps)[1]
+
+def timeseriesSplitTestTrain(nparray, proportion=0.8):
+	indexSplit = round(len(array) * 0.8)
+	train = array[:indexSplit]
+	test = array[indexSplit:]
+	return train, test
