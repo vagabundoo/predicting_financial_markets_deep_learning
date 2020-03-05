@@ -35,7 +35,7 @@ def timeseriesSplitTestTrain(array, proportion=0.8):
 def shapeXinputforColumns(array, n_steps, col_indexes):
 	X = []
 	#col_index = [1,2,3,4]
-	for i in col_index:
-		X.append(sq.splitSeqGetX(array[:,i], n_steps))
+	for i in col_indexes:
+		X.append(splitSeqGetX(array[:,i], n_steps))
 	return np.dstack(X)
 
