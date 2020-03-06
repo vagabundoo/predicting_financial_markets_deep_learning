@@ -1,9 +1,10 @@
 import numpy as np
 
 def splitTimeSequence(sequence, n_steps):
-	'''Splits time series into X and y, with n_steps determining the length of each X. 
+	'''Splits time series (i.e. one column) into X and y, with n_steps determining the length of each X. 
 	Returns numpy arrays of X and y'''
 	X, y = list(), list()
+	sequence(np.array(sequence))
 	for i in range(len(sequence)):
 		# find the end of this pattern
 		end_ix = i + n_steps
@@ -17,22 +18,24 @@ def splitTimeSequence(sequence, n_steps):
 	return np.array(X), np.array(y)
 
 def splitSeqGetX(sequence, n_steps):
-	'''Splits time series into X and y, with n_steps determining length. Returns only the X. '''
+	'''Splits time series (i.e. one column) into X and y, with n_steps determining length. Returns only the X. '''
 	return splitTimeSequence(sequence, n_steps)[0]
 
 def splitSeqGety(sequence, n_steps):
-	'''Splits time series into X and y, with n_steps determining length. Returns only the y. '''
+	'''Splits time series (i.e. one column) into X and y, with n_steps determining length. Returns only the y. '''
 	return splitTimeSequence(sequence, n_steps)[1]
 
 def timeseriesSplitTestTrain(array, proportion=0.8):
 	'''Splits time-series numpy array in a training and test set, according to the proportion set (default = 0.8)
 	Returns train and test arrays'''
+	array = np.array(array)
 	indexSplit = round(len(array) * 0.8)
 	train = array[:indexSplit]
 	test = array[indexSplit:]
 	return train, test
 
 def shapeXinputforColumns(array, n_steps, col_indexes):
+	array = np.array(array)
 	X = []
 	#col_index = [1,2,3,4]
 	for i in col_indexes:
