@@ -1,5 +1,6 @@
 # LSTM models
 
+1.
 ```python
 def model_fn(params):
     model = tf.keras.Sequential()
@@ -15,7 +16,7 @@ def model_fn(params):
                                   callbacks=callbacks, epochs=100, verbose=0).history
     return (history, model)
 ```
-From: [Using an LSTM-based model to predict stock returns] (https://jackdry.com/using-an-lstm-based-model-to-predict-stock-returns)
+From: [Using an LSTM-based model to predict stock returns](https://jackdry.com/using-an-lstm-based-model-to-predict-stock-returns)
 
 2. 
 ```python
@@ -37,8 +38,55 @@ model = Sequential([
     Dense(50, activation='elu'),
     Dropout(0.5),
     Dense(2, activation='softmax')
+])
 ```
 From: [Daytrader collab](https://colab.research.google.com/drive/1W6TprjcxOdXsNwswkpm_XX2U_xld9_zZ)
+
+4. (https://www.kaggle.com/pablocastilla/predict-stock-prices-with-lstm)
+```python
+#Step 2 Build Model
+model = Sequential()
+
+model.add(LSTM(
+    input_dim=1,
+    output_dim=50,
+    return_sequences=True))
+model.add(Dropout(0.2))
+
+model.add(LSTM(
+    100,
+    return_sequences=False))
+model.add(Dropout(0.2))
+
+model.add(Dense(
+    output_dim=1))
+model.add(Activation('linear'))
+
+start = time.time()
+model.compile(loss='mse', optimizer='rmsprop')
+print ('compilation time : ', time.time() - start)
+```
+
+5. From paper: [Fisher, Deep learning with long short-term memory networks for financial market predictions](https://www.econstor.eu/bitstream/10419/157808/1/886576210.pdf)  
+Following
+Granger (1993), who suggests to hold back about 20 percent of the sample as “post-sample” data, we
+use 80 percent of the training samples as training set and 20 percent as validation set, a maximum
+training duration of 1,000 epochs, and an early stopping patience of 10. The specified topology of
+our trained LSTM network is hence as follows:
+- Input layer with 1 feature and 240 timesteps.
+- LSTM layer with h = 25 hidden neurons and a dropout value of 0.16
+This configuration yields 2,752 parameters for the LSTM, leading to a sensible number of approximately 93 parameters per observation.
+- Output layer (dense layer) with two neurons and softmax activation function - a standard
+configuration.
+
+```python
+model = Sequential()
+model.add(LSTM(25, input_shape=input_shape))
+model.add(Dropout(0.16))
+model.add(Dense(2, activation='softmax'))
+```
+
+3.4. Benchmark models - random forest, deep net, and logistic regression
 
 1.
 The model is a Sequential model using two LSTM layers
