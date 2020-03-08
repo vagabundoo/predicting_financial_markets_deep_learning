@@ -11,13 +11,13 @@ def getTrainTestGenerator(data, Xcol, ycol, length=50, batch_size=20, proportion
     Xcol indicates the columns to be used as input, ycol indicates the columns to be used as output.
     Returns a generator for training, and a generator for testing'''
     split_index = ceil(proportionTrainTest * len(data))
-    genTrain = TimeseriesGenerator(data=data[Xcol],
-                                   targets=data[ycol],
+    genTrain = TimeseriesGenerator(data=np.array(data[Xcol]),
+                                   targets=np.array(data[ycol]),
                                    length=length,
                                    batch_size=batch_size,
                                    end_index=split_index - 1)
-    genTest = TimeseriesGenerator(data=data[Xcol],
-                                  targets=data[ycol],
+    genTest = TimeseriesGenerator(data=np.array(data[Xcol]),
+                                  targets=np.array(data[ycol]),
                                   length=length,
                                   start_index=split_index - length)
     return genTrain, genTest
