@@ -39,5 +39,5 @@ def minMaxScaleOnTrain(df, proportion=0.8):
     scaler = MinMaxScaler()
     scaler.fit(train)
     transformedData = scaler.transform(df)
-    df = pd.DataFrame(data=transformedData, columns=df.columns)
+    df = pd.DataFrame(data=transformedData, columns=df.columns, index=df.index)     
     return df
