@@ -4,7 +4,7 @@ def splitTimeSequence(sequence, n_steps):
 	'''Splits time series (i.e. one column) into X and y, with n_steps determining the length of each X. 
 	Returns numpy arrays of X and y'''
 	X, y = list(), list()
-	sequence(np.array(sequence))
+	#sequence(np.array(sequence))
 	for i in range(len(sequence)):
 		# find the end of this pattern
 		end_ix = i + n_steps
@@ -24,6 +24,23 @@ def splitSeqGetX(sequence, n_steps):
 def splitSeqGety(sequence, n_steps):
 	'''Splits time series (i.e. one column) into X and y, with n_steps determining length. Returns only the y. '''
 	return splitTimeSequence(sequence, n_steps)[1]
+
+def splitTimeSequence(sequence, n_steps):
+	'''Splits time series (i.e. one column) into X and y, with n_steps determining the length of each X. 
+	Returns numpy arrays of X and y'''
+	X, y = list(), list()
+	#sequence(np.array(sequence))
+	for i in range(len(sequence)):
+		# find the end of this pattern
+		end_ix = i + n_steps
+		# check if we are beyond the sequence
+		if end_ix > len(sequence)-1:
+			break
+		# gather input and output parts of the pattern
+		seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
+		X.append(seq_x)
+		y.append(seq_y)
+	return np.array(X), np.array(y)	
 
 def timeseriesSplitTestTrain(array, proportion=0.8):
 	'''Splits time-series numpy array in a training and test set, according to the proportion set (default = 0.8)
